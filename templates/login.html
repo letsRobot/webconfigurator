@@ -3,7 +3,30 @@
 <head>
     <meta charset="utf-8">
     <title>Robot Configurator | Login</title>
-    <link rel='stylesheet' type='text/css' href='{{ url_for("static", filename="index.css" }}'>
-    <link rel='stylesheet' type='text/css' href='{{ url_for("static", filename="login.css" }}'>
+    <link rel='stylesheet' type='text/css' href='{{ url_for("static", filename="index.css") }}'>
+    <link rel='stylesheet' type='text/css' href='{{ url_for("static", filename="login.css") }}'>
 </head>
+<body>
+    <div class='header'>
+        <img src='https://www.letsrobot.tv/images/LetsLogo_RGB_512x100_Alpha3.png'>
+        <h1>Login</h1>
+    </div>
+    <div class='content'>
+        <form action='/login' method="POST">
+            <table>
+                <tr>
+                    <td>username</td>
+                    <td><input type='text' name='username'></td>
+                </tr>
+                <tr>
+                    <td>password</td>
+                    <td><input type='password' name='password'></td>
+                </tr>
+                <tr>
+                    <td><input type="submit" value='submit'></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
  </html>
