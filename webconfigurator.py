@@ -7,7 +7,7 @@ def index():
 
 @app.route('/login', methods=['POST'])
 def login():
-    file = open('.credentials', 'w')
+    file = open('.credentials', 'r')
     username = file.readline()
     password = file.readline()
     sent_username = request.form['username']
