@@ -20,16 +20,16 @@ except:
     print("error in letsrobot.conf:", sys.exc_info()[0])
     sys.exit()
 
-#robot
-owner=robot_config.get('robot', 'owner')
-robot_id=robot_config.get('robot', 'robot_id')
-camera_id=robot_config.get('robot', 'camera_id')
-
+# robot
+owner = robot_config.get('robot', 'owner')
+robot_id = robot_config.get('robot', 'robot_id')
+camera_id = robot_config.get('robot', 'camera_id')
 
 
 @app.route('/')
 def index():
     return render_template('login.html')
+
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -47,12 +47,14 @@ def login():
             return redirect(url_for('home'))
     return render_template('login.html', error=error)
 
+
 @app.route('/home')
 def home():
     global logged_in
     if logged_in:
         return render_template('index.html')
     return redirect('/')
+
 
 @app.route('/easymode', methods=['GET', 'POST'])
 def easymode():
@@ -70,7 +72,6 @@ def easymode():
     print("{}, {}, {}, {}".format(username, robotid, cameraid, streamkey))
 
     return redirect('/home')
-
 
 
 if __name__ == '__main__':
