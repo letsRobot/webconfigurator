@@ -8,11 +8,11 @@ from flask import Flask, render_template, redirect, url_for, request
 app = Flask(__name__)
 
 logged_in = False
-
+'''
 robot_config = ConfigParser()
 
 try:
-    robot_config.readfp(open('../letsrobot/letsrobot.conf'))
+    robot_config.readfile(open('../letsrobot/letsrobot.conf'))
 except IOError:
     print("unable to read letsrobot.conf, please check that you have copied letsrobot.sample.conf to letsrobot.conf and modified it.")
     sys.exit()
@@ -24,7 +24,7 @@ except:
 owner = robot_config.get('robot', 'owner')
 robot_id = robot_config.get('robot', 'robot_id')
 camera_id = robot_config.get('robot', 'camera_id')
-
+'''
 
 @app.route('/')
 def index():
@@ -36,10 +36,7 @@ def login():
     global logged_in
     error = None
     if request.method == 'POST':
-        #
-        # This is a placeholder. Actual credentials will be modifiable in
-        # letsrobot.conf
-        #
+#        if request.form['username'] != robot_config.get('webconfigurator', 'username') or request.form['password'] != robot_config.get('webconfigurator', 'password'):
         if request.form['username'] != 'admin' or request.form['password'] != 'admin':
             error = 'Invalid credentials. Please try again.'
         else:
@@ -75,4 +72,7 @@ def easymode():
 
 
 if __name__ == '__main__':
+#    if robot_config.get('webconfigurator', 'enabled') == True:
+#        app.run(debug=robot_config.get('webconfigurator', 'debug'), port=robot_config.get('webconfigurator', 'port'))
     app.run(debug=True, port=80)
+    
