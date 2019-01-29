@@ -48,9 +48,9 @@ def login():
 @app.route('/home')
 def home():
     global logged_in
-    if logged_in:
-        return render_template('index.html')
-    return redirect('/')
+    if not logged_in:
+        return redirect('/')
+    return render_template('index.html')
 
 
 @app.route('/easymode', methods=['GET', 'POST'])
@@ -72,6 +72,8 @@ def easymode():
 
 @app.route('/advancedmode', methods=['GET', 'POST'])
 def advancedmode():
+    if not logged_in:
+        return redirect('/')
     return render_template('advanced.html')
 
 if __name__ == '__main__':
