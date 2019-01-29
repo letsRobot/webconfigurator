@@ -70,9 +70,11 @@ def easymode():
 
     return redirect('/home')
 
+@app.route('/advancedmode', methods=['GET', 'POST'])
+def advancedmode():
+    return render_template('advanced.html')
 
 if __name__ == '__main__':
 #    if robot_config.get('webconfigurator', 'enabled') == True:
 #        app.run(debug=robot_config.get('webconfigurator', 'debug'), port=robot_config.get('webconfigurator', 'port'))
     app.run(debug=True, port=80)
-    

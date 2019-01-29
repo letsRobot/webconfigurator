@@ -11,6 +11,10 @@ a {
     color: white;
 }
 
+a:hover {
+    font-weight: bold;
+}
+
 .header {
     background-color: black;
     width: 100%;

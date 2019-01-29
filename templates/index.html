@@ -13,46 +13,53 @@
         <h1>Configurator</h1>
     </div>
     <div class='content'>
-        <form action='/easymode' method='POST'>
-            <table>
-                <tr>
-                    <td>username</td>
-                    <td><input type='text' name='username'></td>
-                </tr>
-                <tr>
-                    <td>robot id</td>
-                    <td><input type='text' name='robotid'></td>
-                </tr>
-                <tr>
-                    <td>camera id</td>
-                    <td><input type='text' name='cameraid'></td>
-                </tr>
-                <tr>
-                    <td>type</td>
-                    <td>
-                        <select>
-                            <option value='serial_board'>serial_board</option>
-                            <option value='motor_hat'>motor_hat</option>
-                            <option value='gopigo2'>gopigo2</option>
-                            <option vlaue='gopigo3'>gopigo3</option>
-                            <option value='l298n'>l298n</option>
-                            <option value='motozero'>motozero</option>
-                            <opiton value='pololu'>pololu</opiton>
-                            <option value='adafruit_pwm'>adafruit_pwm</option>
-                            <option value='owi_arm'>owi_arm</option>
-                            <option value='none'>none</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>stream key</td>
-                    <td><input type='password' name='streamkey'></td>
-                </tr>
-                <tr>
-                    <td><input type="submit" value='submit'></td>
-                </tr>
-            </table>
-        </form>
+        <div id='easymode-form'>
+            <form action='/easymode' method='POST'>
+                <table>
+                    <tr>
+                        <td>username</td>
+                        <td><input type='text' name='username'></td>
+                    </tr>
+                    <tr>
+                        <td>robot id</td>
+                        <td><input type='text' name='robotid'></td>
+                    </tr>
+                    <tr>
+                        <td>camera id</td>
+                        <td><input type='text' name='cameraid'></td>
+                    </tr>
+                    <tr>
+                        <td>type</td>
+                        <td>
+                            <select>
+                                <option value='serial_board'>serial_board</option>
+                                <option value='motor_hat'>motor_hat</option>
+                                <option value='gopigo2'>gopigo2</option>
+                                <option vlaue='gopigo3'>gopigo3</option>
+                                <option value='l298n'>l298n</option>
+                                <option value='motozero'>motozero</option>
+                                <opiton value='pololu'>pololu</opiton>
+                                <option value='adafruit_pwm'>adafruit_pwm</option>
+                                <option value='owi_arm'>owi_arm</option>
+                                <option value='none'>none</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>stream key</td>
+                        <td><input type='password' name='streamkey'></td>
+                    </tr>
+                    <tr>
+                        <td><input type="submit" value='submit'></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <div id='advancedmode-form'>
+            <form action='/advancedmode'>
+                <input type='submit' value='Advanced Mode'>
+            </form>
+        </div>
     </div>
 </body>
 
