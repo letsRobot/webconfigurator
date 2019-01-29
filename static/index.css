@@ -35,3 +35,17 @@ a:hover {
     text-align: center;
     padding-right: 50px;
 }
+
+.content {
+    width: 100%;
+    align-items: center;
+}
+
+#easymode-form {
+    width: 100%;
+    height: 200px;
+}
+
+#easymode-form table {
+    margin: auto;
+}
