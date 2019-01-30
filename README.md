@@ -17,4 +17,23 @@ nohup python webconfigurator.py &> /dev/null &
 ```
 
 ## Configuration
-Unconfigured.
+(Some of these steps are planned and are not implemented yet.)
+
+The WebConfigurator uses the same `.conf` file the rest of the LetsRobot suite uses. If the WebConfigurator cannot find the `[webconfigurator]` setting in the file, it adds the following to the bottom:
+```
+[webconfigurator]
+enabled=True
+port=80
+debug=False
+username=admin
+password=admin
+```
+> `enabled=True` Tells the script whether or not it's allowed to run. Setting it to 'False' shuts down the server.
+
+> `port=80` Tells the script which port to run the server on. Default is 80. Setting this value to 80 or 443 will make it so your web browser does not need to be told explicitly which port to run it on. If you choose another port, you will have to add `:{port}` to the end of the IP address or hostname of your robot.
+
+> `debug=False` Enabling debug mode will slow down the page, but give more information when something goes wrong. You probably don't need to enable this unless you are a developer or a developer has asked you to.
+
+> `username=admin` You can change this to set your username to log into the web page. It's recommended to change this from the default as soon as possible.
+
+> `password=admin` This is the password to log into the web page. It's recommended to change this from the default as soon as possible, and to not use the same password you use to log into Let's Robot.
