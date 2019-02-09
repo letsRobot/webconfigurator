@@ -91,6 +91,10 @@ def advancedmode():
 def sixy():
     return render_template('sixy.html')
 
+@app.route('/estop', methods=['GET', 'POST'])
+def estop():
+    return render_template('estop.html')
+
 if __name__ == '__main__':
 #    if robot_config.get('webconfigurator', 'enabled') == True:
 #        app.run(debug=robot_config.get('webconfigurator', 'debug'), port=robot_config.get('webconfigurator', 'port'))
