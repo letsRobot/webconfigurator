@@ -8,6 +8,9 @@ from flask import Flask, render_template, redirect, url_for, request
 app = Flask(__name__)
 
 logged_in = False
+
+sixy_mode = True
+
 '''
 robot_config = ConfigParser()
 
@@ -28,7 +31,15 @@ camera_id = robot_config.get('robot', 'camera_id')
 
 @app.route('/')
 def index():
-    return render_template('login.html')
+    global logged_in
+    global sixy_mode
+    
+    if sixy_mode:
+        logged_in = True
+        return redirect(url_for('sixy'))
+    if not logged_in:
+        return render_template('login.html')
+    return redirect(url_for('home'))
 
 
 @app.route('/login', methods=['POST'])
@@ -75,6 +86,10 @@ def advancedmode():
     if not logged_in:
         return redirect('/')
     return render_template('advanced.html')
+
+@app.route('/sixy', methods=['GET', 'POST'])
+def sixy():
+    return render_template('sixy.html')
 
 if __name__ == '__main__':
 #    if robot_config.get('webconfigurator', 'enabled') == True:
