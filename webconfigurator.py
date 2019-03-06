@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 logged_in = False
 
-sixy_mode = True
+sixy_mode = False
 
 '''
 robot_config = ConfigParser()
