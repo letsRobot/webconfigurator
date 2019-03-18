@@ -1,101 +1,80 @@
 import os.path
 import argparse
-import sys
+import os
 
 from configparser import ConfigParser
 from flask import Flask, render_template, redirect, url_for, request
 
 app = Flask(__name__)
 
-logged_in = False
-
-sixy_mode = False
-
-'''
+local_config = ConfigParser()
+local_config.read('settings.conf')
 robot_config = ConfigParser()
 
-try:
-    robot_config.readfile(open('../letsrobot/letsrobot.conf'))
-except IOError:
-    print("unable to read letsrobot.conf, please check that you have copied letsrobot.sample.conf to letsrobot.conf and modified it.")
-    sys.exit()
-except:
-    print("error in letsrobot.conf:", sys.exc_info()[0])
-    sys.exit()
+debug_enabled = None
+port = None
+lr_conf_file_dir = None
 
-# robot
-owner = robot_config.get('robot', 'owner')
-robot_id = robot_config.get('robot', 'robot_id')
-camera_id = robot_config.get('robot', 'camera_id')
-'''
+login_enabled = None
+login_username = None
+login_password = None
+
+sixy_enabled = None
+sixy_controls = None
+sixy_robot = None
+sixy_robot_id = None
+
+def setup():
+    global debug_enabled
+    global port
+    global lr_conf_file_dir
+    global login_enabled
+    global login_username
+    global login_password
+    global sixy_enabled
+    global sixy_controls
+    global sixy_robot
+    global sixy_robot_id
+
+    debug_enabled = local_config.getboolean('configurator', 'debug')
+    port = local_config.getint('configurator', 'port')
+    lr_conf_file_dir = local_config.get('configurator', 'lr_conf_file_dir')
+    login_enabled = local_config.getboolean('login', 'enabled')
+    login_username = local_config.get('login', 'username')
+    login_password = local_config.get('login', 'password')
+
+    robot_config.read(lr_conf_file_dir)
+
+@app.route('/update/simple', methods=['POST'])
+def simple_update():
+    username = request.form['username']
+    robot_id = request.form['robot_id']
+    camera_id = request.form['camera_id']
+    robot_type = request.form['type']
+    stream_key = request.form['stream_key']
+    api_key = request.form['api_key']
+
+    os.system("sed -i '/^\\[robot]/,/^\\[/{s/^owner[[:space:]]*=.*/owner=%s/}' %s" % (username, lr_conf_file_dir))
+    os.system("sed -i '/^\\[robot]/,/^\\[/{s/^robot_id[[:space:]]*=.*/robot_id=%s/}' %s" % (robot_id, lr_conf_file_dir))
+    os.system("sed -i '/^\\[robot]/,/^\\[/{s/^camera_id[[:space:]]*=.*/camera_id=%s/}' %s" % (camera_id, lr_conf_file_dir))
+    os.system("sed -i '/^\\[robot]/,/^\\[/{s/^type[[:space:]]*=.*/type=%s/}' %s" % (robot_type, lr_conf_file_dir))
+    os.system("sed -i '/^\\[robot]/,/^\\[/{s/^stream_key[[:space:]]*=.*/stream_key=%s/}' %s" % (stream_key, lr_conf_file_dir))
+    os.system("sed -i '/^\\[robot]/,/^\\[/{s/^api_key[[:space:]]*=.*/api_key=%s/}' %s" % (api_key, lr_conf_file_dir))
+
+    return redirect('/')
+    
 
 @app.route('/')
 def index():
-    global logged_in
-    global sixy_mode
-    
-    if sixy_mode:
-        logged_in = True
-        return redirect(url_for('sixy'))
-    if not logged_in:
-        return render_template('login.html')
-    return redirect(url_for('home'))
+    return render_template(
+        'index.html', 
+        username="username",
+        robot_id="robot_id",
+        camera_id="camera_id",
+        type="type",
+        stream_key="stream_key",
+        api_key="api_key")
 
-
-@app.route('/login', methods=['POST'])
-def login():
-    global logged_in
-    error = None
-    if request.method == 'POST':
-#        if request.form['username'] != robot_config.get('webconfigurator', 'username') or request.form['password'] != robot_config.get('webconfigurator', 'password'):
-        if request.form['username'] != 'admin' or request.form['password'] != 'admin':
-            error = 'Invalid credentials. Please try again.'
-        else:
-            logged_in = True
-            return redirect(url_for('home'))
-    return render_template('login.html', error=error)
-
-
-@app.route('/home')
-def home():
-    global logged_in
-    if not logged_in:
-        return redirect('/')
-    return render_template('index.html')
-
-
-@app.route('/easymode', methods=['GET', 'POST'])
-def easymode():
-    username = request.form['username']
-    robotid = request.form['robotid']
-    cameraid = request.form['cameraid']
-    #_type = request.form['type']
-    streamkey = request.form['streamkey']
-
-    #
-    # Print is a placeholder for when letsrobot.conf actually gets modified.
-    # I'd also like to populate with values from letsrobot.conf when the page
-    # is loaded.
-    #
-    print("{}, {}, {}, {}".format(username, robotid, cameraid, streamkey))
-
-    return redirect('/home')
-
-@app.route('/advancedmode', methods=['GET', 'POST'])
-def advancedmode():
-    if not logged_in:
-        return redirect('/')
-    return render_template('advanced.html')
-
-@app.route('/sixy', methods=['GET', 'POST'])
-def sixy():
-    return render_template('sixy.html')
-
-@app.route('/estop', methods=['GET', 'POST'])
-def estop():
-    return render_template('estop.html')
-
-if __name__ == '__main__':
-#    if robot_config.get('webconfigurator', 'enabled') == True:
-#        app.run(debug=robot_config.get('webconfigurator', 'debug'), port=robot_config.get('webconfigurator', 'port'))
-    app.run(debug=True, port=80)
+if __name__ == "__main__":
+    setup()
+    app.run(debug=debug_enabled, host="0.0.0.0", port=port)
