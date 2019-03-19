@@ -63,17 +63,36 @@ def simple_update():
 
     return redirect('/')
     
+@app.route('/advanced')
+def advanced():
+        return render_template('advanced.html')
+
+@app.route('/options')
+def options():
+        return render_template('options.html',
+        debug=local_config.get('configurator', 'debug'),
+        port=local_config.get('configurator', 'port'),
+        lr_conf_file_dir=local_config.get('configurator', 'lr_conf_file_dir'),
+        login_enabled=local_config.getboolean('login', 'enabled'),
+        login_username=local_config.get('login', 'username'),
+        login_password=local_config.get('login', 'password'),
+        sixy_enabled=local_config.get('sixy_mode', 'enabled'),
+        sixy_controls=local_config.get('sixy_mode', 'controls'),
+        sixy_robot=local_config.get('sixy_mode', 'robot'),
+        sixy_robot_id=local_config.get('sixy_mode', 'robot_id')
+        )
+
 
 @app.route('/')
 def index():
     return render_template(
         'index.html', 
-        username="username",
-        robot_id="robot_id",
-        camera_id="camera_id",
-        type="type",
-        stream_key="stream_key",
-        api_key="api_key")
+        username=robot_config.get('robot', 'owner'),
+        robot_id=robot_config.get('robot', 'robot_id'),
+        camera_id=robot_config.get('robot', 'camera_id'),
+        type=robot_config.get('robot', 'type'),
+        stream_key=robot_config.get('robot', 'stream_key'),
+        api_key=robot_config.get('robot', 'api_key'))
 
 if __name__ == "__main__":
     setup()

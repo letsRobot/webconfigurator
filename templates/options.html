@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Robot Configurator</title>
+    <link rel='stylesheet' type='text/css' href='{{ url_for("static",filename="index.css") }}'>
+</head>
+
+<body>
+    <div class="header">
+        <img src="https://www.letsrobot.tv/images/LetsLogo_RGB_512x100_Alpha3.png">
+        <h1>Configurator</h1>
+    </div>
+    <div>
+        <form action="update/options">
+            <table>
+                <thead>
+                    <tr>
+                        <th colspan="2">Configurator</th>
+                    </tr>
+                </thead>
+                <tr>
+                    <td>Debug</td>
+                    <td><input type="text" name="debug" value="{{ debug }}"></td>
+                </tr>
+                <tr>
+                    <td>Port</td>
+                    <td><input type="text" name="port" value="{{ port }}"></td>
+                </tr>
+                <tr>
+                    <td>LR Conf File Directory</td>
+                    <td><input type="text" name="lr_conf_file_dir" value="{{ lr_conf_file_dir }}"></td>
+                </tr>
+                <thead>
+                    <tr>
+                        <th colspan="2">Login</th>
+                    </tr>
+                </thead>
+                <tr>
+                    <td>Enabled</td>
+                    <td><input type="text" name="login_enabled" value="{{ login_enabled }}"></td>
+                </tr>
+                <tr>
+                    <td>Username</td>
+                    <td><input type="text" name="login_username" value="{{ login_username }}"></td>
+                </tr>
+                <tr>
+                    <td>Password</td>
+                    <td><input type="password" name="login_password" value="{{ login_password }}"></td>
+                </tr>
+                <thead>
+                    <tr>
+                        <th colspan="2">Sixy Mode</th>
+                    </tr>
+                </thead>
+                <tr>
+                    <td>Enabled</td>
+                    <td><input type="text" name="sixy_enabled" value="{{ sixy_enabled }}"></td>
+                </tr>
+                <tr>
+                    <td>Controls</td>
+                    <td><input type="text" name="sixy_controls" value="{{ sixy_controls }}"></td>
+                </tr>
+                <tr>
+                    <td>Robot</td>
+                    <td><input type="text" name="sixy_robot" value="{{ sixy_robot }}"></td>
+                </tr>
+                <tr>
+                    <td>Robot ID</td>
+                    <td><input type="text" name="sixy_robot_id" value="{{ sixy_robot_id }}"></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+
+</html>

@@ -1,50 +1,40 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="UTF-8">
-    <title>Robot Configurator</title>
-    <link rel='stylesheet' type='text/css' href='{{ url_for("static",filename="index.css") }}'>
-</head>
-
-<body>
-    <div class="header">
-        <img src="https://www.letsrobot.tv/images/LetsLogo_RGB_512x100_Alpha3.png">
-        <h1>Configurator</h1>
-    </div>
-    <div class="content">
-        <div class="simple-mode">
-            <form action="update/simple" method="POST">
-                <table>
-                    <tr>
-                        <td>Owner</td>
-                        <td><input type="text" name="username" value="{{ username }}"></td>
-                    </tr>
-                    <tr>
-                        <td>Robot ID</td>
-                        <td><input type="text" name="robot_id" value="{{ robot_id }}"></td>
-                    </tr>
-                    <tr>
-                        <td>Camera ID</td>
-                        <td><input type="text" name="camera_id" value="{{ camera_id }}"></td>
-                    </tr>
-                    <tr>
-                        <td>Type</td>
-                        <td><input type="text" name="type" value="{{ type }}"></td>
-                    </tr>
-                    <tr>
-                        <td>Stream Key</td>
-                        <td><input type="password" name="stream_key" value="{{ stream_key }}"></td>
-                    </tr>
-                    <tr>
-                        <td>API Key</td>
-                        <td><input type="text" name="api_key" value="{{ api_key }}"></td>
-                    </tr>
-                </table>
-                <input type="submit" value="Update">
-            </form>
-        </div>
-    </div>
-</body>
-
-</html>
+{% extends "layout.html" %}
+{% block title %}
+Configurator
+{% endblock %}
+{% block content %}
+<div class="simple-mode">
+    <form action="update/simple" method="POST">
+        <table>
+            <tr>
+                <td>Owner</td>
+                <td><input type="text" name="username" value="{{ username }}"></td>
+            </tr>
+            <tr>
+                <td>Robot ID</td>
+                <td><input type="text" name="robot_id" value="{{ robot_id }}"></td>
+            </tr>
+            <tr>
+                <td>Camera ID</td>
+                <td><input type="text" name="camera_id" value="{{ camera_id }}"></td>
+            </tr>
+            <tr>
+                <td>Type</td>
+                <td><input type="text" name="type" value="{{ type }}"></td>
+            </tr>
+            <tr>
+                <td>Stream Key</td>
+                <td><input type="password" name="stream_key" value="{{ stream_key }}"></td>
+            </tr>
+            <tr>
+                <td>API Key</td>
+                <td><input type="text" name="api_key" value="{{ api_key }}"></td>
+            </tr>
+        </table>
+        <input type="submit" value="Update">
+    </form>
+</div>
+<div>
+    <a href="{{ url_for('advanced') }}">Advanced</a>
+</div>
+{% endblock %}

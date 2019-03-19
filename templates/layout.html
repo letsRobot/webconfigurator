@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Robot Configurator | {% block title %}{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='stylesheet.css') }}">
+</head>
+
+<body>
+    <div class="header">
+        <img src="https://www.letsrobot.tv/images/LetsLogo_RGB_512x100_Alpha3.png">
+        <h1>{{ self.title() }}</h1>
+    </div>
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+
+</html>
