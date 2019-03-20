@@ -1,12 +1,33 @@
-import os.path
 import argparse
+import logging
+import logging.handlers
 import os
+import os.path
+from configparser import ConfigParser
 from datetime import datetime
 
-from configparser import ConfigParser
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, redirect, render_template, request, url_for
 
 app = Flask(__name__)
+
+log = logging.getLogger('WebConfigurator')
+log.setLevel(logging.DEBUG)
+console_handler = logging.StreamHandler()
+console_handler.setLevel(logging.DEBUG)
+console_formatter = logging.Formatter(
+    '%(asctime)s - %(filename)s : %(message)s', '%H:%M:%S')
+console_handler.setFormatter(console_formatter)
+file_handler = logging.handlers.RotatingFileHandler('WebConfigurator.log',
+                                                    maxBytes=1000000,
+                                                    backupCount=2
+                                                    )
+file_handler.setLevel(logging.DEBUG)
+file_formatter = logging.Formatter(
+    '%(asctime)s %(name)s %(levelname)s - %(message)s', '%Y-%m-%d %H:%M:%S')
+file_handler.setFormatter(file_formatter)
+
+log.addHandler(console_handler)
+log.addHandler(file_handler)
 
 local_config = ConfigParser()
 local_config.read('settings.conf')
@@ -26,6 +47,7 @@ sixy_robot = None
 sixy_robot_id = None
 
 if __name__ == "__main__":
+    log.critical('WebConfigurator Starting')
     setup()
     app.run(debug=debug_enabled, host="0.0.0.0", port=port)
 
@@ -42,31 +64,6 @@ def setup():
     global sixy_robot
     global sixy_robot_id
     global robot_config
-
-
-@app.route('/update/simple', methods=['POST'])
-def simple_update():
-    username = request.form['username']
-    robot_id = request.form['robot_id']
-    camera_id = request.form['camera_id']
-    robot_type = request.form['type']
-    stream_key = request.form['stream_key']
-    api_key = request.form['api_key']
-
-    os.system(
-        "sed -i '/^\\[robot]/,/^\\[/{s/^owner[[:space:]]*=.*/owner=%s/}' %s" % (username, lr_conf_file_dir))
-    os.system(
-        "sed -i '/^\\[robot]/,/^\\[/{s/^robot_id[[:space:]]*=.*/robot_id=%s/}' %s" % (robot_id, lr_conf_file_dir))
-    os.system(
-        "sed -i '/^\\[robot]/,/^\\[/{s/^camera_id[[:space:]]*=.*/camera_id=%s/}' %s" % (camera_id, lr_conf_file_dir))
-    os.system("sed -i '/^\\[robot]/,/^\\[/{s/^type[[:space:]]*=.*/type=%s/}' %s" % (
-        robot_type, lr_conf_file_dir))
-    os.system("sed -i '/^\\[robot]/,/^\\[/{s/^stream_key[[:space:]]*=.*/stream_key=%s/}' %s" % (
-        stream_key, lr_conf_file_dir))
-    os.system(
-        "sed -i '/^\\[robot]/,/^\\[/{s/^api_key[[:space:]]*=.*/api_key=%s/}' %s" % (api_key, lr_conf_file_dir))
-
-    return redirect('/'), 200
 
 
 @app.route('/advanced')
@@ -126,3 +123,55 @@ def index():
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
+
+
+@app.route('/api/update/simple', methods=['POST'])
+def simple_update():
+    username = request.form['username']
+    robot_id = request.form['robot_id']
+    camera_id = request.form['camera_id']
+    robot_type = request.form['type']
+    stream_key = request.form['stream_key']
+    api_key = request.form['api_key']
+
+    os.system(
+        "sed -i '/^\\[robot]/,/^\\[/{s/^owner[[:space:]]*=.*/owner=%s/}' %s" % (username, lr_conf_file_dir))
+    os.system(
+        "sed -i '/^\\[robot]/,/^\\[/{s/^robot_id[[:space:]]*=.*/robot_id=%s/}' %s" % (robot_id, lr_conf_file_dir))
+    os.system(
+        "sed -i '/^\\[robot]/,/^\\[/{s/^camera_id[[:space:]]*=.*/camera_id=%s/}' %s" % (camera_id, lr_conf_file_dir))
+    os.system("sed -i '/^\\[robot]/,/^\\[/{s/^type[[:space:]]*=.*/type=%s/}' %s" % (
+        robot_type, lr_conf_file_dir))
+    os.system("sed -i '/^\\[robot]/,/^\\[/{s/^stream_key[[:space:]]*=.*/stream_key=%s/}' %s" % (
+        stream_key, lr_conf_file_dir))
+    os.system(
+        "sed -i '/^\\[robot]/,/^\\[/{s/^api_key[[:space:]]*=.*/api_key=%s/}' %s" % (api_key, lr_conf_file_dir))
+
+    return redirect('/'), 200
+
+
+@app.route('/api/update/options', methods=['POST'])
+def options_update():
+    global debug_enabled
+    global port
+    global lr_conf_file_dir
+    global login_enabled
+    global login_password
+    global login_username
+    global sixy_enabled
+    global sixy_controls
+    global sixy_robot
+    global sixy_robot_id
+
+    debug_enabled = request.form['debug']
+    port = request.form['port']
+    lr_conf_file_dir = request.form['lr_conf_file_dir']
+    login_enabled = request.form['login_enabled']
+    login_username = request.form['login_username']
+    login_password = request.form['login_password']
+    sixy_enabled = request.form['sixy_enabled']
+    sixy_controls = request.form['sixy_controls']
+    sixy_robot = request.form['sixy_robot']
+    sixy_robot_id = request.form['sixy_robot_id']
+
+    return redirect('/options'), 200

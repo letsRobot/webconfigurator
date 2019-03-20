@@ -6,7 +6,7 @@ Options
 {{ url_for('static', filename='options.css') }}
 {% endblock %}
 {% block content %}
-<form action="update/options">
+<form action="api/update/options" method="POST">
     <table>
         <thead>
             <tr>
@@ -64,5 +64,6 @@ Options
             <td><input type="text" name="sixy_robot_id" value="{{ sixy_robot_id }}"></td>
         </tr>
     </table>
+    <input type="submit" value="update">
 </form>
 {% endblock %}
