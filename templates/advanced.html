@@ -1,1 +1,10 @@
-This is still a work in progress.
+{% extends "layout.html" %}
+{% block title %}
+Advanced
+{% endblock %}
+{% block stylesheet %}
+{{ url_for('static', filename='advanced.css') }}
+{% endblock %}
+{% block content %}
+<p>This page is still under development.</p>
+{% endblock %}
