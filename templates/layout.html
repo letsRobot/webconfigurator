@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Robot Configurator | {% block title %}{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='stylesheet.css') }}">
+    <link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% endblock %}">
+</head>
+
+<body>
+    <div class="header">
+        <img src="https://www.letsrobot.tv/images/LetsLogo_RGB_512x100_Alpha3.png">
+        <h1>{{ self.title() }}</h1>
+    </div>
+    <div class="navbar">
+        <a href="{{ url_for('index') }}">Simple Mode</a>
+        <a href="{{ url_for('advanced') }}">Advanced Mode</a>
+        <a href="{{ url_for('options') }}">Options</a>
+    </div>
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+
+</html>

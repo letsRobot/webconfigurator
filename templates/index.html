@@ -1,66 +1,41 @@
-<!DOCTYPE html>
-<html lang='en'>
-
-<head>
-    <meta charset="utf-8">
-    <title>Robot Configurator</title>
-    <link rel='stylesheet' type='text/css' href='{{ url_for("static",filename="index.css") }}'>
-</head>
-
-<body>
-    <div class='header'>
-        <img src='https://www.letsrobot.tv/images/LetsLogo_RGB_512x100_Alpha3.png'>
-        <h1>Configurator</h1>
-    </div>
-    <div class='content'>
-        <div id='easymode-form'>
-            <form action='/easymode' method='POST'>
-                <table>
-                    <tr>
-                        <td>username</td>
-                        <td><input type='text' name='username'></td>
-                    </tr>
-                    <tr>
-                        <td>robot id</td>
-                        <td><input type='text' name='robotid'></td>
-                    </tr>
-                    <tr>
-                        <td>camera id</td>
-                        <td><input type='text' name='cameraid'></td>
-                    </tr>
-                    <tr>
-                        <td>type</td>
-                        <td>
-                            <select>
-                                <option value='serial_board'>serial_board</option>
-                                <option value='motor_hat'>motor_hat</option>
-                                <option value='gopigo2'>gopigo2</option>
-                                <option vlaue='gopigo3'>gopigo3</option>
-                                <option value='l298n'>l298n</option>
-                                <option value='motozero'>motozero</option>
-                                <opiton value='pololu'>pololu</opiton>
-                                <option value='adafruit_pwm'>adafruit_pwm</option>
-                                <option value='owi_arm'>owi_arm</option>
-                                <option value='none'>none</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>stream key</td>
-                        <td><input type='password' name='streamkey'></td>
-                    </tr>
-                    <tr>
-                        <td><input type="submit" value='submit'></td>
-                    </tr>
-                </table>
-            </form>
-        </div>
-        <div id='advancedmode-form'>
-            <form action='/advancedmode'>
-                <input type='submit' value='Advanced Mode'>
-            </form>
-        </div>
-    </div>
-</body>
-
-</html>
+{% extends "layout.html" %}
+{% block title %}
+Configurator
+{% endblock %}
+{% block stylesheet %}
+{{ url_for('static', filename='index.css') }}
+{% endblock %}
+{% block content %}
+<div class="simple-mode">
+    <form action="api/update/simple" method="POST">
+        <table>
+            <tr>
+                <td>Owner</td>
+                <td><input type="text" name="username" value="{{ username }}"></td>
+            </tr>
+            <tr>
+                <td>Robot ID</td>
+                <td><input type="text" name="robot_id" value="{{ robot_id }}"></td>
+            </tr>
+            <tr>
+                <td>Camera ID</td>
+                <td><input type="text" name="camera_id" value="{{ camera_id }}"></td>
+            </tr>
+            <tr>
+                <td>Type</td>
+                <td><input type="text" name="type" value="{{ type }}"></td>
+            </tr>
+            <tr>
+                <td>Stream Key</td>
+                <td><input type="password" name="stream_key" value="{{ stream_key }}"></td>
+            </tr>
+            <tr>
+                <td>API Key</td>
+                <td><input type="text" name="api_key" value="{{ api_key }}"></td>
+            </tr>
+        </table>
+        <input type="submit" value="Update">
+    </form>
+</div>
+<p>Last updated {{ now.strftime("%d %b %Y at %X") }}. Reboot for updated values.</p>
+{% endblock %}
