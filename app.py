@@ -10,6 +10,9 @@ from flask import Flask, redirect, render_template, request, url_for
 
 app = Flask(__name__)
 
+now = datetime.now()
+start_time = now
+
 log = logging.getLogger('WebConfigurator')
 log.setLevel(logging.DEBUG)
 console_handler = logging.StreamHandler()
@@ -96,7 +99,7 @@ def options():
 
 @app.route('/')
 def index():
-    now = datetime.now()
+    global start_time
 
     username = robot_config.get('robot', 'owner')
     robot_id = robot_config.get('robot', 'robot_id')
@@ -112,7 +115,7 @@ def index():
         "type": robot_type,
         "stream_key": stream_key,
         "api_key": api_key,
-        "now": now
+        "now": start_time
     }
     return render_template(
         'index.html',
