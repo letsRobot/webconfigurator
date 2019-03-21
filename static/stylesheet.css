@@ -37,11 +37,8 @@ a:hover {
 .content {
     width: 100%;
     align-items: center;
+    align-content: center;
     margin: auto;
-}
-
-.content form {
-    margin: 0 auto;
 }
 
 .navbar {
