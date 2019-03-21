@@ -55,3 +55,19 @@ robot_id=
 > `robot=` This is the name of your robot. You need it for sending control commands.
 
 > `robot_id=` This is the ID of your robot. You need it for sending control commands.
+
+## Running
+you can run with the following command
+```
+python3 -m flask run
+```
+
+To allow remote connections (i.e., your phone or another computer), add
+```
+--host=0.0.0.0
+```
+
+To change the port, add
+```
+--port={port}
+```
