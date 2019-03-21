@@ -51,22 +51,7 @@ sixy_robot_id = None
 
 if __name__ == "__main__":
     log.critical('WebConfigurator Starting')
-    setup()
     app.run(debug=debug_enabled, host="0.0.0.0", port=port)
-
-
-def setup():
-    global debug_enabled
-    global port
-    global lr_conf_file_dir
-    global login_enabled
-    global login_username
-    global login_password
-    global sixy_enabled
-    global sixy_controls
-    global sixy_robot
-    global sixy_robot_id
-    global robot_config
 
 
 @app.route('/advanced')
