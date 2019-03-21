@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,intial-scale=1,shrink-to-fit=no">
     <title>Robot Configurator | {% block title %}{% endblock %}</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='stylesheet.css') }}">
     <link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% endblock %}">
@@ -14,14 +15,25 @@
         <h1>{{ self.title() }}</h1>
     </div>
     <div class="navbar">
-        <a href="{{ url_for('index') }}">Simple Mode</a>
-        <a href="{{ url_for('advanced') }}">Advanced Mode</a>
-        <a href="{{ url_for('options') }}">Options</a>
+        <div class="links">
+            <a href="{{ url_for('index') }}">Simple Mode</a>
+            <a href="{{ url_for('advanced') }}">Advanced Mode</a>
+            <a href="{{ url_for('options') }}">Options</a>
+        </div>
     </div>
     <div class="content">
         {% block content %}
         {% endblock %}
     </div>
+
+    <footer>
+        <div class="footer-content">
+            <a href="https://www.letsrobot.tv/">Let's Robot</a> |
+            <a href="https://www.github.com/letsrobot/webconfigurator">GitHub</a> |
+            <a href="https://www.twitter.com/letsrobot">Twitter</a> |
+            <a href="https://discord.gg/bePWWuU">Discord</a>
+        </div>
+    </footer>
 </body>
 
 </html>
