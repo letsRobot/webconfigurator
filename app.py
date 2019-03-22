@@ -38,9 +38,6 @@ robot_config = ConfigParser()
 debug_enabled = local_config.getboolean('configurator', 'debug')
 port = local_config.getint('configurator', 'port')
 lr_conf_file_dir = local_config.get('configurator', 'lr_conf_file_dir')
-login_enabled = local_config.getboolean('login', 'enabled')
-login_username = local_config.get('login', 'username')
-login_password = local_config.get('login', 'password')
 
 robot_config.read(lr_conf_file_dir)
 
@@ -49,24 +46,10 @@ sixy_controls = None
 sixy_robot = None
 sixy_robot_id = None
 
-logged_in = True
 
 if __name__ == "__main__":
     log.critical('WebConfigurator Starting')
     app.run(debug=debug_enabled, host="0.0.0.0", port=port)
-
-
-
-def check_logged_in():
-    global logged_in
-    global login_enabled
-
-    return login_enabled and logged_in
-
-
-@app.route('/login')
-def login():
-    return render_template('login.html')
 
 
 @app.route("/favicon.ico")
@@ -77,15 +60,11 @@ def favicon():
         mimetype='image/vnd.microsoft.icon'), 200
 
 
-
-
-
 @app.route('/advanced')
 def advanced():
     global robot_config
-    if check_logged_in():
-        return render_template('advanced.html', robot_config=robot_config), 200
-    return redirect('/login')
+    return render_template('advanced.html', robot_config=robot_config), 200
+
 
 
 @app.route('/options')
@@ -113,34 +92,27 @@ def options():
 
 @app.route('/')
 def index():
-    global logged_in
     global start_time
+    username = robot_config.get('robot', 'owner')
+    robot_id = robot_config.get('robot', 'robot_id')
+    camera_id = robot_config.get('robot', 'camera_id')
+    robot_type = robot_config.get('robot', 'type')
+    stream_key = robot_config.get('robot', 'stream_key')
+    api_key = robot_config.get('robot', 'api_key')
 
-    if (login_enabled and logged_in) or (not login_enabled):
-
-        username = robot_config.get('robot', 'owner')
-        robot_id = robot_config.get('robot', 'robot_id')
-        camera_id = robot_config.get('robot', 'camera_id')
-        robot_type = robot_config.get('robot', 'type')
-        stream_key = robot_config.get('robot', 'stream_key')
-        api_key = robot_config.get('robot', 'api_key')
-
-        content = {
-            "username": username,
-            "robot_id": robot_id,
-            "camera_id": camera_id,
-            "type": robot_type,
-            "stream_key": stream_key,
-            "api_key": api_key,
-            "now": start_time
-        }
-        return render_template(
-            'index.html',
-            **content
-        ), 200
-
-    if login_enabled and not logged_in:
-        return redirect('/login'), 401
+    content = {
+        "username": username,
+        "robot_id": robot_id,
+        "camera_id": camera_id,
+        "type": robot_type,
+        "stream_key": stream_key,
+        "api_key": api_key,
+        "now": start_time
+    }
+    return render_template(
+        'index.html',
+        **content
+    ), 200
 
 
 @app.errorhandler(404)
@@ -198,16 +170,3 @@ def options_update():
     sixy_robot_id = request.form['sixy_robot_id']
 
     return redirect('/options'), 200
-
-
-@app.route('/api/login', methods=['POST'])
-def try_login():
-    global logged_in
-    global login_username
-    global login_password
-
-    if request.form['username'] == login_username and request.form['password'] == login_password:
-        logged_in = True
-        return redirect('/')
-
-    return redirect('/login')
