@@ -4,7 +4,7 @@ Web server hosted on the robot for web-based configuration. Kept separate due to
 ## Installation
 To install WebConfigurator, follow these steps:
 1. Clone this repo: `git clone https://www.github.com/letsrobot/webconfigurator`
-2. Install the prerequesites: `python -m pip install -r requirements.txt`
+2. Install the prerequesites: `python -m pip install flask`
 
 ## Configuration
 (Some of these steps are planned and are not implemented yet.)
