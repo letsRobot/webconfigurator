@@ -56,6 +56,7 @@ if __name__ == "__main__":
     app.run(debug=debug_enabled, host="0.0.0.0", port=port)
 
 
+
 def check_logged_in():
     global logged_in
     global login_enabled
@@ -74,6 +75,9 @@ def favicon():
         os.path.join(app.root_path, 'static'),
         'favicon.ico',
         mimetype='image/vnd.microsoft.icon'), 200
+
+
+
 
 
 @app.route('/advanced')
