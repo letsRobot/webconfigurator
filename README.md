@@ -1,8 +1,6 @@
 # webconfigurator
 Web server hosted on the robot for web-based configuration. Kept separate due to it's larger size and extra dependancies.
 
-# THIS IS AN INCOMPLETE PRODUCT. IT CAN AND WILL HURT YOUR FILES. DO NOT INSTALL IF YOU DO NOT KNOW WHAT YOU ARE DOING.
-
 ## Installation
 To install WebConfigurator, follow these steps:
 1. Clone this repo: `git clone https://www.github.com/letsrobot/webconfigurator`
