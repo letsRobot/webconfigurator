@@ -170,3 +170,15 @@ def options_update():
     sixy_robot_id = request.form['sixy_robot_id']
 
     return redirect('/options'), 200
+
+@app.route('/api/update/advanced', methods=['POST'])
+def advanced_update():
+    global robot_config
+    global lr_conf_file_dir
+    sections = robot_config.sections()
+    for section in sections:
+        items = dict(robot_config.items(section))
+        for item in items:
+            query = str(section + " " + item)
+            result = request.form[query]
+            os.system("sed -i '/^\\[%s]/,/^\\[/{s/^%s[[:space:]]*=.*/%s=%s/}' %s" % (section, item, item, result, lr_conf_file_dir))

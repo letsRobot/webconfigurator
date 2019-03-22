@@ -23,7 +23,7 @@ Advanced
                 {% for item in items %}
                     <tr>
                         <td>{{ item }} </td>
-                        <td><input type="text" name="{{ item }}" value="{{ robot_config.get(section, item) }}"></td>
+                        <td><input type="text" name="{{- section }} {{ item -}}" value="{{ robot_config.get(section, item) }}"></td>
                     </tr>
                 {% endfor %}
             {% endfor %}
