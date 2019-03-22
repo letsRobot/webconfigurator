@@ -1,0 +1,6 @@
+.simple-mode {
+    /* I'm really not a fan of using explicit sizes, but this seems to be the
+    only thing allowing it to center this div. */
+    width: 240px;
+    margin: 0 auto;    
+}

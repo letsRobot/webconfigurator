@@ -6,5 +6,25 @@ Advanced
 {{ url_for('static', filename='advanced.css') }}
 {% endblock %}
 {% block content %}
-<p>This page is still under development.</p>
+{% set sections = robot_config.sections() %}
+<div class="form-content">
+    <form action="/api/update/advanced">
+        <table>
+            {% for section in sections %}
+                {% set items = dict(robot_config.items(section)) %}
+                <thead>
+                    <th><br></th>
+                    <th colspan="2">{{ section }}</th>
+                </thead>
+                {% for item in items %}
+                    <tr>
+                        <td>{{ item }} </td>
+                        <td><input type="text" name="{{ item }}" value="{{ robot_config.get(section, item) }}"></td>
+                    </tr>
+                {% endfor %}
+            {% endfor %}
+        </table>
+        <input type="submit" value="update">
+    </form>
+</div>
 {% endblock %}

@@ -6,64 +6,75 @@ Options
 {{ url_for('static', filename='options.css') }}
 {% endblock %}
 {% block content %}
-<form action="api/update/options" method="POST">
-    <table>
-        <thead>
+<div class="options-form">
+    <form action="api/update/options" method="POST">
+        <table>
+            <thead>
+                <tr>
+                    <th><br></th>
+                </tr>
+                <tr>
+                    <th colspan="2">Configurator</th>
+                </tr>
+            </thead>
             <tr>
-                <th colspan="2">Configurator</th>
+                <td>Debug</td>
+                <td><input type="text" name="debug" value="{{ debug }}"></td>
             </tr>
-        </thead>
-        <tr>
-            <td>Debug</td>
-            <td><input type="text" name="debug" value="{{ debug }}"></td>
-        </tr>
-        <tr>
-            <td>Port</td>
-            <td><input type="text" name="port" value="{{ port }}"></td>
-        </tr>
-        <tr>
-            <td>LR Conf File Directory</td>
-            <td><input type="text" name="lr_conf_file_dir" value="{{ lr_conf_file_dir }}"></td>
-        </tr>
-        <thead>
             <tr>
-                <th colspan="2">Login</th>
+                <td>Port</td>
+                <td><input type="text" name="port" value="{{ port }}"></td>
             </tr>
-        </thead>
-        <tr>
-            <td>Enabled</td>
-            <td><input type="text" name="login_enabled" value="{{ login_enabled }}"></td>
-        </tr>
-        <tr>
-            <td>Username</td>
-            <td><input type="text" name="login_username" value="{{ login_username }}"></td>
-        </tr>
-        <tr>
-            <td>Password</td>
-            <td><input type="password" name="login_password" value="{{ login_password }}"></td>
-        </tr>
-        <thead>
             <tr>
-                <th colspan="2">Sixy Mode</th>
+                <td>LR Conf File Directory</td>
+                <td><input type="text" name="lr_conf_file_dir" value="{{ lr_conf_file_dir }}"></td>
             </tr>
-        </thead>
-        <tr>
-            <td>Enabled</td>
-            <td><input type="text" name="sixy_enabled" value="{{ sixy_enabled }}"></td>
-        </tr>
-        <tr>
-            <td>Controls</td>
-            <td><input type="text" name="sixy_controls" value="{{ sixy_controls }}"></td>
-        </tr>
-        <tr>
-            <td>Robot</td>
-            <td><input type="text" name="sixy_robot" value="{{ sixy_robot }}"></td>
-        </tr>
-        <tr>
-            <td>Robot ID</td>
-            <td><input type="text" name="sixy_robot_id" value="{{ sixy_robot_id }}"></td>
-        </tr>
-    </table>
-    <input type="submit" value="update">
-</form>
+            <thead>
+                <tr>
+                    <th><br></th>
+                </tr>
+                <tr>
+                    <th colspan="2">Login</th>
+                </tr>
+            </thead>
+            <tr>
+                <td>Enabled</td>
+                <td><input type="text" name="login_enabled" value="{{ login_enabled }}"></td>
+            </tr>
+            <tr>
+                <td>Username</td>
+                <td><input type="text" name="login_username" value="{{ login_username }}"></td>
+            </tr>
+            <tr>
+                <td>Password</td>
+                <td><input type="password" name="login_password" value="{{ login_password }}"></td>
+            </tr>
+            <thead>
+                <tr>
+                    <th><br></th>
+                </tr>
+                <tr>
+                    <th colspan="2">Sixy Mode</th>
+                </tr>
+            </thead>
+            <tr>
+                <td>Enabled</td>
+                <td><input type="text" name="sixy_enabled" value="{{ sixy_enabled }}"></td>
+            </tr>
+            <tr>
+                <td>Controls</td>
+                <td><input type="text" name="sixy_controls" value="{{ sixy_controls }}"></td>
+            </tr>
+            <tr>
+                <td>Robot</td>
+                <td><input type="text" name="sixy_robot" value="{{ sixy_robot }}"></td>
+            </tr>
+            <tr>
+                <td>Robot ID</td>
+                <td><input type="text" name="sixy_robot_id" value="{{ sixy_robot_id }}"></td>
+            </tr>
+        </table>
+        <input type="submit" value="update">
+    </form>
+</div>
 {% endblock %}
