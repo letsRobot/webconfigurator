@@ -35,6 +35,7 @@ a:hover {
 }
 
 .content {
+    min-height: calc(100vh - 150px);
     width: 100%;
     align-items: center;
     align-content: center;
@@ -56,11 +57,7 @@ a:hover {
 }
 
 footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    margin: auto;
-    height: 2.5rem;
+    height: 50px;
 }
 
 .footer-content {
