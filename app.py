@@ -49,7 +49,7 @@ sixy_controls = None
 sixy_robot = None
 sixy_robot_id = None
 
-logged_in = False
+logged_in = True
 
 if __name__ == "__main__":
     log.critical('WebConfigurator Starting')
@@ -78,8 +78,9 @@ def favicon():
 
 @app.route('/advanced')
 def advanced():
+    global robot_config
     if check_logged_in():
-        return render_template('advanced.html'), 200
+        return render_template('advanced.html', robot_config=robot_config), 200
     return redirect('/login')
 
 
