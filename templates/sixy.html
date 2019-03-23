@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='sixy.css') }}">
+    <!-- TODO add ajax -->
+</head>
+
+<body>
+    <div class="content">
+        <div class="controls">
+            <div class="slidecontainer">
+                <p>Volume</p>
+                <input type="range" min="0" max="100" value="80" step="5" class="slider" id="volumeSlider">
+            </div>
+            <div class="slidecontainer">
+                <p>Speed</p>
+                <input type="range" min="-1.0" max="1.0" value="1" step="0.1" class="slider" id="speedSlider">
+                </div>
+                <div id="tableMode">
+                    <p>Table Mode</p>
+                    <label class="switch">
+                        <input type="checkbox" id="tableButton">
+                        <span class="slider_round"></span>
+                    </label>
+                </div>
+                <div id="micEnable">
+                    <p>Microphone</p>
+                    <label class="switch">
+                        <input type="checkbox" checked id="micButton">
+                        <span class="slider_round"></span>
+                    </label>
+                </div>
+                <button onclick="update()" id="updateButton">Update</button>
+                <button onclick="reboot()" id="rebootButton">Reboot</button>
+                </div>
+                <iframe src="https://www.letsrobot.tv/chat/jill" width=240 height=800></iframe>
+                </div>
+                <script src="index.js"></script>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
