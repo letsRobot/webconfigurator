@@ -1,36 +1,16 @@
 import argparse
-import logging
-import logging.handlers
 import os
 import os.path
 from configparser import ConfigParser
 from datetime import datetime
 
-from flask import Flask, redirect, render_template, request, url_for, send_from_directory
+from flask import (Flask, redirect, render_template, request,
+                   send_from_directory, url_for)
 
 app = Flask(__name__)
 
 now = datetime.now()
 start_time = now
-
-log = logging.getLogger('WebConfigurator')
-log.setLevel(logging.DEBUG)
-console_handler = logging.StreamHandler()
-console_handler.setLevel(logging.DEBUG)
-console_formatter = logging.Formatter(
-    '%(asctime)s - %(filename)s : %(message)s', '%H:%M:%S')
-console_handler.setFormatter(console_formatter)
-file_handler = logging.handlers.RotatingFileHandler('WebConfigurator.log',
-                                                    maxBytes=1000000,
-                                                    backupCount=2
-                                                    )
-file_handler.setLevel(logging.DEBUG)
-file_formatter = logging.Formatter(
-    '%(asctime)s %(name)s %(levelname)s - %(message)s', '%Y-%m-%d %H:%M:%S')
-file_handler.setFormatter(file_formatter)
-
-log.addHandler(console_handler)
-log.addHandler(file_handler)
 
 local_config = ConfigParser()
 local_config.read('settings.conf')
@@ -48,7 +28,6 @@ sixy_robot_id = None
 
 
 if __name__ == "__main__":
-    log.critical('WebConfigurator Starting')
     app.run(debug=debug_enabled, host="0.0.0.0", port=port)
 
 
@@ -64,7 +43,6 @@ def favicon():
 def advanced():
     global robot_config
     return render_template('advanced.html', robot_config=robot_config), 200
-
 
 
 @app.route('/options')
@@ -88,6 +66,11 @@ def options():
                            sixy_robot_id=local_config.get(
                                'sixy_mode', 'robot_id')
                            ), 200
+
+
+@app.route('/sixy')
+def sixy():
+    return render_template('sixy.html'), 200
 
 
 @app.route('/')
@@ -171,6 +154,7 @@ def options_update():
 
     return redirect('/options'), 200
 
+
 @app.route('/api/update/advanced', methods=['POST'])
 def advanced_update():
     global robot_config
@@ -181,4 +165,5 @@ def advanced_update():
         for item in items:
             query = str(section + " " + item)
             result = request.form[query]
-            os.system("sed -i '/^\\[%s]/,/^\\[/{s/^%s[[:space:]]*=.*/%s=%s/}' %s" % (section, item, item, result, lr_conf_file_dir))
+            os.system("sed -i '/^\\[%s]/,/^\\[/{s/^%s[[:space:]]*=.*/%s=%s/}' %s" % (
+                section, item, item, result, lr_conf_file_dir))
