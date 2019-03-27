@@ -21,10 +21,11 @@ lr_conf_file_dir = local_config.get('configurator', 'lr_conf_file_dir')
 
 robot_config.read(lr_conf_file_dir)
 
-sixy_enabled = None
-sixy_controls = None
-sixy_robot = None
-sixy_robot_id = None
+sixy_enabled = local_config.getboolean('sixy_mode', 'enabled')
+sixy_controls = local_config.getboolean('sixy_mode', 'controls')
+chatroom = local_config.get('sixy_mode', 'chatroom')
+sixy_robot = local_config.get('sixy_mode', 'robot')
+sixy_robot_id = local_config.get('sixy_mode', 'robot_id')
 
 
 if __name__ == "__main__":
@@ -70,7 +71,14 @@ def options():
 
 @app.route('/sixy')
 def sixy():
-    return render_template('sixy.html'), 200
+    global chatroom
+    global sixy_controls
+    global sixy_enabled
+    global sixy_robot
+    global sixy_robot_id
+    controls = dict(**chatroom, **sixy_controls, **sixy_enabled, **sixy_robot,
+        **sixy_robot_id)
+    return render_template('sixy.html', controls=controls), 200
 
 
 @app.route('/')
