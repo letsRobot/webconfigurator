@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+{% block title %}
+500, internal server error
+{% endblock %}
+{% block content %}
+<h1>500</h1>
+<p>Something went wrong. Is settings.conf configured correctly?</p>
+<pre>{{ e }}</pre>
+<p><a href="{{ url_for('index') }}">Return home</a></p>
+{% endblock %}
