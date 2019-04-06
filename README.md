@@ -26,7 +26,7 @@ lr_conf_file_dir=letsrobot.conf
 ## Running
 you can run with the following command
 ```
-python3 -m flask run
+python -m flask run
 ```
 
 To allow remote connections (i.e., your phone or another computer), add
