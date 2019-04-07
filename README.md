@@ -39,4 +39,13 @@ To change the port, add
 --port={port}
 ```
 
+Port 80 and 443 are protected by root, so to use those ports you must run with `sudo`.
+
 If you do not want to specify a port in your web browser when you connect to the page, set the port to 80. By default, Flask sets the port to 5000.
+
+## Auto-starting when your robot does.
+You can add this to your `start_robot` file:
+```
+cd /home/pi/webconfigurator
+sudo python -m flask --host=0.0.0.0 --port=80 &> /dev/null &
+```
